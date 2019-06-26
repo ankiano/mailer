@@ -21,7 +21,7 @@ clean-pyc:
 
 
 install: clean
-	sudo -H pip3 install --editable ./
+	pip3 install --editable ./
 
 remove:
-	sudo -H pip3 uninstall mailer
+	pip3 uninstall mailer

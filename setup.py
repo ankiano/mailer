@@ -15,7 +15,7 @@ requirements = [str(ir.req) for ir in parsed_requirements]
 
 setup(
     name='mailer',
-    version='0.0.1',
+    version='0.0.2',
     description='CLI tool for sending emails',
     long_description='',
     packages=find_packages(),

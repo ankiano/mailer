@@ -7,7 +7,8 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.mime.base import MIMEBase
 from email import encoders
-from smtplib import SMTP
+import ssl
+from smtplib import SMTP_SSL
 
 
 def get_recipients(to):
@@ -62,7 +63,7 @@ def get_attachment(attachment):
               type=click.Path(exists=True, dir_okay=False),
               help="File to be attached. Сan add several files by specifying \
                     additional keys. Total max size of all attached files \
-                    should be less then 35Mb")
+                    should be less then 25Mb")
 @click.option('--debug', is_flag=True,
               help="Will print values of options without sending mail.")
 def cli(from_, appkey, to, subject, body, attachment, debug):
@@ -84,13 +85,14 @@ def cli(from_, appkey, to, subject, body, attachment, debug):
         msg['Subject'] = subject
         msg.attach(get_body(body))
         for a in attachment:
-            click.echo(a)
             msg.attach(get_attachment(a))
+
+        # create a secure SSL context
+        context = ssl.create_default_context()
         # send email
-        with SMTP(host="smtp.gmail.com", port=587) as server:
+        with SMTP_SSL(host="smtp.gmail.com", port=465,
+                      context=context) as server:
             server.noop()
-            server.ehlo()
-            server.starttls()
             server.ehlo()
             server.login(user=from_, password=appkey)
             server.sendmail(from_, to, msg.as_string())

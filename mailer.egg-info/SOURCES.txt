@@ -1,0 +1,8 @@
+README.md
+mailer.egg-info/PKG-INFO
+mailer.egg-info/SOURCES.txt
+mailer.egg-info/dependency_links.txt
+mailer.egg-info/entry_points.txt
+mailer.egg-info/not-zip-safe
+mailer.egg-info/requires.txt
+mailer.egg-info/top_level.txt

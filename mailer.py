@@ -64,39 +64,29 @@ def get_attachment(attachment):
               help="File to be attached. Сan add several files by specifying \
                     additional keys. Total max size of all attached files \
                     should be less then 25Mb")
-@click.option('--debug', is_flag=True,
-              help="Will print values of options without sending mail.")
 def cli(from_, appkey, to, subject, body, attachment, debug):
     """Mailer is a command line tool for sending emails from gmail account."""
 
-    if debug:
-        click.echo('from: {}'.format(from_))
-        click.echo('appkey: {}'.format(appkey))
-        click.echo('to: {}'.format(to))
-        click.echo('subject: {}'.format(subject))
-        click.echo('body text: {}'.format(get_body(body)))
-        click.echo('attachment: {}'.format(attachment))
-    else:
-        # create message
-        msg = MIMEMultipart('alternative')
-        # set message params
-        msg['From'] = from_
-        msg['To'] = get_recipients(to)
-        msg['Subject'] = subject
-        msg.attach(get_body(body))
-        for a in attachment:
-            msg.attach(get_attachment(a))
+    # create message
+    msg = MIMEMultipart('alternative')
+    # set message params
+    msg['From'] = from_
+    msg['To'] = get_recipients(to)
+    msg['Subject'] = subject
+    msg.attach(get_body(body))
+    for a in attachment:
+        msg.attach(get_attachment(a))
 
-        # create a secure SSL context
-        context = ssl.create_default_context()
-        # send email
-        with SMTP_SSL(host="smtp.gmail.com", port=465,
-                      context=context) as server:
-            server.noop()
-            server.ehlo()
-            server.login(user=from_, password=appkey)
-            server.sendmail(from_, to, msg.as_string())
-            server.close()
+    # create a secure SSL context
+    context = ssl.create_default_context()
+    # send email
+    with SMTP_SSL(host="smtp.gmail.com", port=465,
+                  context=context) as server:
+        server.noop()
+        server.ehlo()
+        server.login(user=from_, password=appkey)
+        server.sendmail(from_, to, msg.as_string())
+        server.close()
 
 
 if __name__ == '__main__':

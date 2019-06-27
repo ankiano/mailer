@@ -2,7 +2,7 @@
 Mailer is a command line tool for sending emails from gmail account.
 
 ### installation:
-    sudo pip3 install git+https://github.com/ankiano/mailer.git -U
+    sudo -H pip3 install git+https://github.com/ankiano/mailer.git -U
 
 ## example of usage:
 

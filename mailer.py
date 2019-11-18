@@ -64,7 +64,7 @@ def get_attachment(attachment):
               help="File to be attached. Сan add several files by specifying \
                     additional keys. Total max size of all attached files \
                     should be less then 25Mb")
-def cli(from_, appkey, to, subject, body, attachment, debug):
+def cli(from_, appkey, to, subject, body, attachment):
     """Mailer is a command line tool for sending emails from gmail account."""
 
     # create message

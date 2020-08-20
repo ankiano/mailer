@@ -1,8 +1,14 @@
 #!/usr/bin/env python3.6
 # coding=utf-8
 
-from pip._internal.req import parse_requirements
-from pip._internal.download import PipSession
+try: # for pip >= 10
+    from pip._internal.req import parse_requirements
+except ImportError: # for pip <= 9.0.3
+    from pip.req import parse_requirements
+try: # for pip >= 10
+    from pip._internal.download import PipSession
+except ImportError: # for pip <= 9.0.3
+    from pip.download import PipSession
 
 from setuptools import setup, find_packages
 
@@ -15,10 +21,9 @@ requirements = [str(ir.req) for ir in parsed_requirements]
 
 setup(
     name='mailer',
-    version='0.0.3',
+    version='0.0.4',
     description='CLI tool for sending emails',
     long_description='',
-#     packages=find_packages(),
     py_modules=['mailer'],
     include_package_data=True,
     install_requires=requirements,

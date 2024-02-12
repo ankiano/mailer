@@ -1,4 +1,4 @@
-#!/usr/bin/env python3.6
+#!/usr/bin/env python3.8
 # coding=utf-8
 
 try: # for pip >= 10
@@ -21,7 +21,7 @@ requirements = [str(ir.req) for ir in parsed_requirements]
 
 setup(
     name='mailer',
-    version='0.0.4',
+    version='1.0.1',
     description='CLI tool for sending emails',
     long_description='',
     py_modules=['mailer'],

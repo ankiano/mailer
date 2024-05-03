@@ -1,4 +1,4 @@
-#!/usr/bin/env python3.8
+#!/usr/bin/env python3.10
 # coding=utf-8
 
 from setuptools import setup, find_packages
@@ -12,7 +12,7 @@ with Path('requirements.txt').open() as requirements_txt:
 
 setup(
     name='mailer',
-    version='1.0.2',
+    version='1.0.3',
     description='CLI tool for sending emails',
     long_description='',
     py_modules=['mailer'],

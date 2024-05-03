@@ -84,7 +84,7 @@ def cli(to, subject, body, attachment):
         # The _config.pass attribute is present and not None
         server.login(user=_config.username, password=_config.password)
 
-    server.sendmail(_config.username, msg['To'], msg.as_string())
+    server.sendmail(_config.username, msg['To'].split(','), msg.as_string())
     log.info('message sent to email')
     server.close()
 

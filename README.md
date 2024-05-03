@@ -8,9 +8,11 @@ Mailer is a command line tool for sending emails from gmail account.
 
     mailer --help
 
-    mailer --to user@example.com \
+    mailer --to user1@example.com,user2@example.com \
            --subject "Subject of the mail" \
            --body "Some body message"
+
+    `--to` param can pass one or several recipients separated by ,
 
     mailer --to mailing.list \
            --subject "Subject of the mail" \
@@ -18,7 +20,7 @@ Mailer is a command line tool for sending emails from gmail account.
            --attachment file1.zip
            --attachment file2.zip
 
-    mailing.list should contain a list of recipients separated by ,
+    `--to` param cap pass file containg a list of recipients separated by \n (new line)
 
 ### example of .mail.yml for simple smtp:
 

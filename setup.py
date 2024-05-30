@@ -12,7 +12,7 @@ with Path('requirements.txt').open() as requirements_txt:
 
 setup(
     name='mailer',
-    version='1.0.4',
+    version='1.0.5',
     description='CLI tool for sending emails',
     long_description='',
     py_modules=['mailer'],

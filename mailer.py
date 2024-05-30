@@ -4,10 +4,12 @@ import logging
 import yaml
 import click
 import os
+import mimetypes
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.mime.base import MIMEBase
 from email import encoders
+from email.header import Header
 import ssl
 from smtplib import SMTP, SMTP_SSL
 
@@ -19,7 +21,6 @@ def get_recipients(to):
             return ", ".join([e.replace('\n', '') for e in f])
     else:
         return ", ".join(to.replace('\n', '').split(','))
-
 
 def get_body(body):
     """Extract email body text from specified file (.txt,.html)"""
@@ -33,18 +34,26 @@ def get_body(body):
     else:
         return MIMEText(body, 'plain')
 
-
 def get_attachment(attachment):
-    """Prepare attachment"""
+    """Prepare attachment with correct MIME type."""
 
     if os.path.exists(attachment):
-        submessage = MIMEBase('application', 'octet-stream')
+        mime_type, _ = mimetypes.guess_type(attachment)
+        if mime_type is None:
+            mime_type = 'application/octet-stream'
+        
+        main_type, sub_type = mime_type.split('/', 1)
+        submessage = MIMEBase(main_type, sub_type)
         submessage.set_payload(open(attachment, 'rb').read())
         encoders.encode_base64(submessage)
-        submessage.add_header('Content-Disposition', 'attachment; filename={}'
-                              .format(attachment))
+        
+        # encode the filename using Header
+        filename = os.path.basename(attachment)
+        encoded_filename = Header(filename, 'utf-8').encode()
+        
+        # add header with encoded filename
+        submessage.add_header('Content-Disposition', 'attachment', filename=encoded_filename)
         return submessage
-
 
 @click.command()
 @click.option('--to', required=True,
